@@ -30,7 +30,7 @@ export default function SignUp() {
       swal({
         title: "Good job!",
         text: "You clicked the button!",
-        icon: "warning",
+        icon: "success",
         button: "OK!",
       });
       navigate("/login");
