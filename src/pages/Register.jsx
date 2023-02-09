@@ -5,8 +5,9 @@ import { auth, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { ref } from "firebase/storage";
+import swal from "sweetalert";
+
 export default function SignUp() {
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,10 +27,20 @@ export default function SignUp() {
         email: email,
       });
       await setDoc(doc(db, "userChatrs", res.user.uid), {});
+      swal({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "warning",
+        button: "OK!",
+      });
       navigate("/login");
     } catch (error) {
-      console.log(error);
-      setError(true);
+      swal({
+        title: "Something went wrong!",
+        text: "You clicked the button!",
+        icon: "warning",
+        button: "OK!",
+      });
     }
   };
   return (
@@ -41,16 +52,8 @@ export default function SignUp() {
             <span className="iconForm">
               <i className="fa fa-user"></i>
             </span>
-            <input
-              placeholder="Name"
-              type="text"
-              // onChange={handleChange}
-              // value={formik.values.name}
-            />
+            <input placeholder="Name" type="text" />
           </div>
-          {/* {formik.touched.name && formik.errors.name ? (
-            <div className="errors-Vali">{formik.errors.name}</div>
-          ) : null} */}
           <div className="form-input">
             <span className="iconForm">
               <i className="fa fa-envelope"></i>
@@ -83,7 +86,6 @@ export default function SignUp() {
           <button type="submit" className="button-Sign">
             Register
           </button>
-          {error && <span className="text-danger">Something went wrong</span>}
         </form>
         <p>
           Already have an account?

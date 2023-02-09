@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import swal from "sweetalert";
+
 export default function Login() {
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -11,10 +12,20 @@ export default function Login() {
     const password = e.target[1].value;
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      await swal({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success",
+        button: "OK!",
+      });
       navigate("/");
     } catch (error) {
-      console.log(error);
-      setError(true);
+      await swal({
+        title: "Something went wrong!",
+        text: "You clicked the button!",
+        icon: "warning",
+        button: "OK!",
+      });
     }
   };
   return (
@@ -54,7 +65,6 @@ export default function Login() {
           <button type="submit" className="button-Sign">
             Login
           </button>
-          {error && <span className="text-danger">Something went wrong</span>}
         </form>
         <div className="icon-contact">
           <span>
